@@ -64,20 +64,21 @@ def ask_groq(prompt):
  
  
 def get_analysis(facts, table):
-    prompt = (
-        f"You are a careful market data analyst. Here are numbers for Bitcoin ({PAIR}), "
-        f"the last {WINDOW} finished daily candles.\n\n"
-        f"Numbers calculated by code:\n{json.dumps(facts, indent=2)}\n\n"
-        f"Daily closes:\n{table}\n\n"
-        "Decide which kinds of analysis are useful here (for example trend, volatility, drawdown, "
-        "volume, momentum) and use only those. Return JSON with exactly these keys:\n"
-        "- analysis_types: a list of objects, each with \"type\" and \"what_i_looked_at\" "
-        "(list only the analyses you really used)\n"
-        "- observations: a list of 3 to 5 strings, each tied to specific numbers above\n"
-        "- summary: 2 or 3 sentences\n"
-        "- limitations: one sentence on what this analysis cannot tell us\n"
-        "Rules: use only the numbers given, do not invent anything, describe what the data shows, "
-        "and never tell anyone to buy, sell or invest."
+    def get_analysis(facts, table):
+prompt = {
+f"You are a careful market data analyst. Here are numbers for Bitcoin ({PAIR}), "
+f"the last {WINDOW) finished daily candles.\n\n"
+f"Numbers calculated by code:\n{json.dumps(facts, indent=2)}n\n"
+f"Daily closes:\n{table}\n\n"
+"Decide which kinds of analysis are useful here (for example trend, volatility, drawdown, "
+"volume, momentum) and use 5 more AI analysis of your choice. Return JSON with exactly these keys:\n"
+"- analysis_types: a list of objects, each with \"type\" and \"what_i_looked_at\" "
+"(list only the analyses you really used)\n"
+"- observations: a list of 8 to 10 strings, each tied to specific numbers above\n"
+"- summary: 5 or 7 sentences\n"
+"- limitations: one sentence on what this analysis cannot tell us\n"
+"Rules: use only the numbers given, jdo not invent anything, describe what the data shows, "
+"and never tell anyone to buy, sell or invest."
     )
     for attempt in range(2):
         text = ask_groq(prompt)
