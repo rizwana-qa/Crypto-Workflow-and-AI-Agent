@@ -63,7 +63,6 @@ def ask_groq(prompt):
     return r.json()["choices"][0]["message"]["content"].strip()
  
  
-def get_analysis(facts, table):
     def get_analysis(facts, table):
 prompt = {
 f"You are a careful market data analyst. Here are numbers for Bitcoin ({PAIR}), "
