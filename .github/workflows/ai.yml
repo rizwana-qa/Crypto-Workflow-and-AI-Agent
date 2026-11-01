@@ -1,0 +1,30 @@
+name: Daily AI analysis
+ 
+on:
+  schedule:
+    - cron: "30 4 * * *"
+  workflow_dispatch:
+ 
+permissions:
+  contents: write
+ 
+jobs:
+  analyse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python ai_analysis.py
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      - name: Save the report in the repo
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add reports
+          git commit -m "Add daily AI analysis" || echo "Nothing to commit"
+          git pull --rebase
+          git push
